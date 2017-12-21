@@ -13,3 +13,4 @@ template/src/*
 template/include
 template/firmware
 .vscode/
+*~
