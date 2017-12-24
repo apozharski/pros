@@ -1,20 +1,26 @@
 #include "math.h"
 #include "PID.h"
+#include "task.h"
+
+
+
 
 PID* init_PID(float (*real)(),float (*target)())
 {
   PID *ret = malloc(sizeof(PID)); 
   PID n = {.get_real = real, .get_target = target};
-  &ret = n;
+  *ret = n;
   return ret;
 }
 
 void start_PID(PID *pid)
 {
+  pid->task = taskCreate(positionPIDControl, TASK_DEFAULT_STACK_SIZE, &pid, TASK_PRIORITY_DEFAULT);
 }
 
 float get_PID_output(PID *pid)
 {
+  return pid->output;
 }
 
 void set_kp(PID *pid, float P)
@@ -54,5 +60,5 @@ float get_deriv(PID *pid)
 
 bool is_stable(PID *pid)
 {
-  return (abs(pid->error-pid)<pid->stable_delta);
+  return (abs(pid->error)<pid->stable_delta);
 }

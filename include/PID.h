@@ -1,8 +1,6 @@
 #ifndef PIDAPI_H_
 #define PIDAPI_H_
 
-#include "API.h"
-#include "math.h"
 
 typedef struct PID
 {
@@ -19,7 +17,7 @@ typedef struct PID
   float output;
 } PID;
 
-PID init_PID(float (*get_real)(),float (*get_target)());
+PID * init_PID(float (*get_real)(),float (*get_target)());
 
 void start_PID(PID *pid);
 
@@ -41,4 +39,4 @@ float get_deriv(PID *pid);
 
 bool is_stable(PID *pid);
 
-#endif /* REXAPI_H_ */
+#endif 
