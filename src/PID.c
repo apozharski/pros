@@ -37,13 +37,12 @@ void pid_func(void *param)
       pid->output = -127;
     }
 
-    /*foreach(int *motor, params.outputs)
+    for(int* m = pid->motors; *m != 0; m++)
     {
-      motorSet(abs(*motor), output*(*motor/abs(*motor)));
+      motorSet(abs(*m), pid->output*(*m/abs(*m)));
     }
-    */
-    taskDelayUntil(&loopTime,MOTOR_REFRESH_TIME);
     
+    taskDelayUntil(&loopTime,MOTOR_REFRESH_TIME);
   }
 }
 
@@ -51,7 +50,7 @@ void pid_func(void *param)
 PID* init_PID(float (*real)(),float (*target)())
 {
   PID *ret = malloc(sizeof(PID)); 
-  PID n = {.get_real = real, .get_target = target};
+  PID n = {.get_real = real, .get_target = target, .motors = {0}};
   *ret = n;
   return ret;
 }
