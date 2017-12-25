@@ -1,6 +1,7 @@
 #ifndef PIDAPI_H_
 #define PIDAPI_H_
 
+#include "task.h"
 
 typedef struct PID
 {
@@ -12,6 +13,7 @@ typedef struct PID
   float (*get_target)();
   float error;
   float prev_error;
+  float derivative;
   float integral;
   float stable_delta;
   float output;
