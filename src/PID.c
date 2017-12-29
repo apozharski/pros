@@ -42,7 +42,7 @@ void pid_func(void *param)
       motorSet(abs(*m), pid->output*(*m/abs(*m)));
     }
     
-    taskDelayUntil(&loopTime,MOTOR_REFRESH_TIME);
+    taskDelayUntil(&loopTime, pid->cycle_time);
   }
 }
 
@@ -50,7 +50,7 @@ void pid_func(void *param)
 PID* init_PID(float (*real)(),float (*target)())
 {
   PID *ret = malloc(sizeof(PID)); 
-  PID n = {.get_real = real, .get_target = target, .motors = {0}};
+  PID n = {.get_real = real, .get_target = target, .motors = {0}, .cycle_time = 20};
   *ret = n;
   return ret;
 }
@@ -103,4 +103,9 @@ float get_deriv(PID *pid)
 bool is_stable(PID *pid)
 {
   return (abs(pid->error)<pid->stable_delta);
+}
+
+void set_cycle_time(PID *pid, unsigned long time)
+{
+  pid->cycle_time = time;
 }

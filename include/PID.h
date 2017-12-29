@@ -18,6 +18,7 @@ typedef struct PID
   float integral;
   float stable_delta;
   float output;
+  unsigned long cycle_time;
 } PID;
 
 PID * init_PID(float (*get_real)(),float (*get_target)());
